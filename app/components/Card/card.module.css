@@ -1,0 +1,20 @@
+.card {
+    border: 1px solid var(--primary);
+    background-color: var(--bg);
+    border-radius: 4px 4px 0px 0px;
+}
+
+
+.cardHeader {
+    padding: 18px 33px;
+    background-color: var(--primary);
+}
+
+.cardHeaderTitle {
+    font-size: 16px;
+}
+
+.cardBody > p {
+    padding: 24px 34px;
+    font-size: 14px;
+}
