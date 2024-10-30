@@ -1,8 +1,10 @@
 // a extensão JSX significa que o conteúdo é o HTML do React
 
-import homeStyles from './home.module.css'
+import Link from 'next/link'
+import pageStyles from './page.module.css'
 import { title } from 'process'
 import {Card} from "./components/Card"
+import {Footer} from "./components/Footer"
 
 export default function Page() {
 
@@ -11,8 +13,8 @@ export default function Page() {
   // FOOTER
 
     return (
-      <main className={homeStyles.homeScreen} style={{flex: 1}}>
-        <section className={homeStyles.container}>
+      <main className={pageStyles.screen} style={{flex: 1}}>
+        <section className={pageStyles.container}>
           <div 
         style={{ 
             display: "flex", 
@@ -21,13 +23,25 @@ export default function Page() {
           }}
         >
           <h1>F1 QUIZ!</h1>
-        </div>        
-        <Card></Card>
-        <footer style={{ marginTop: "24px", fontWeight: "bold" }}>
-          <p>
-            Projetinho de NextJS para praticar
-          </p>
-        </footer>
+        </div>
+
+        <Card
+          headerTitle="TESTE SEU CONHECIMENTO DE F1"
+        >
+        <p>
+          Lambe minha bilola
+        </p>
+        <p>
+          FORMULARIO / BOTAO
+          <br />
+          <Link href="/game">
+          Jogar 
+        </Link>
+        </p>
+        
+        </Card>
+        <Footer></Footer>
+
         </section>
       </main>
 

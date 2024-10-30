@@ -1,21 +1,19 @@
 import cardStyles from "./card.module.css"
 
-export function Card() {
+
+interface CardProps {
+  headerTitle: string;
+  children: React.ReactNode;
+}
+
+export function Card(props: CardProps) {
     return (
         <div className={cardStyles.card}>
           <header className={cardStyles.cardHeader}>
-            <h1 className={cardStyles.cardHeaderTitle}>TESTE SEU CONHECIMENTO DE F1</h1>
+            <h1 className={cardStyles.cardHeaderTitle}>{props.headerTitle}</h1>
           </header>
           <section className={cardStyles.cardBody}>
-            <p style={{marginBottom: "32px"}}>
-              Lambe minha bilola
-            </p>
-            <p>
-              FORMULARIO / BOTAO
-            </p>
-            <a href="/game">
-            Jogar 
-            </a>
+            {props.children}
           </section>
         </div>
     )

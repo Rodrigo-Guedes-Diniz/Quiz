@@ -1,21 +1,21 @@
-.homeScreen {
-    background: url("/images/4kF1.jpg");
+.screen {
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     padding-top: 40px;
     padding-left: 13px;
     padding-right: 13px;
 }
 
 @media (min-width: 600px) {
-    .homeScreen {
+    .screen {
+        background-image: url("/images/4kF1.jpg");
         padding-top: 50px;
         padding-left: 10%;
         padding-right: 10%;
     }
   }
 
-  .container {}
+ 
 
   @media (min-width: 600px) {
     .container {
