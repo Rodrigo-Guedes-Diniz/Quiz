@@ -1,4 +1,4 @@
-// usamos export default quando queremos criar uma nova página
+"use client";
 
 import Link from "next/link";
 import { Card } from "../components/Card";
@@ -6,12 +6,16 @@ import { Footer } from "../components/Footer";
 import pageStyles from "../page.module.css";
 import config from "../../config.json"
 import { Alternativa} from "../components/Alternativa"
+import React from "react";
 
 const perguntas = config.perguntas;
 
+
+// usamos export default quando queremos criar uma nova página
 export default function GameScreen() {
 
-    const perguntaAtual = 0;
+    const [answerState, setAnswerState] = React.useState("");
+    const [perguntaAtual, mudarPerguntaAtual] = React.useState(0);
     const perguntaNumero = perguntaAtual + 1;
     const pergunta = perguntas[perguntaAtual];
 
@@ -36,7 +40,17 @@ export default function GameScreen() {
                     <p>
                         {pergunta.descricao}
                     </p>
-                    <form style={{margin: "0px 32px", marginBottom: "20px"}}>
+                    <form 
+                    style={{margin: "0px 32px", marginBottom: "20px"}}
+                    onSubmit={() => {
+                       event.preventDefault();
+                        const $perguntaInfo = event.target as HTMLFormElement;
+                        const formData = new FormData($perguntaInfo);
+                        const {alternativa} = Object.fromEntries(formData.entries());
+                        const isCorrectAnswer = alternativa === pergunta.answer;
+                        mudarPerguntaAtual(perguntaAtual + 1);
+                    }}
+                    >
                         {pergunta.alternativas.map((alternativa, index) => (
                             <Alternativa 
                             key={alternativa + index}
@@ -44,10 +58,18 @@ export default function GameScreen() {
                             order={index}
                             />
                         ))}
-
-                        <button>
-                            Confirmar
-                        </button>
+                            {answerState === "" && (
+                                <button>
+                                    Confirmar
+                                </button>
+                            )}
+                            {answerState === "error" && (
+                                "X"
+                            )}
+                            {answerState === "success" && (
+                                "V"
+                            )}
+                        
                     </form>
                 </Card> 
                 <Footer></Footer>
