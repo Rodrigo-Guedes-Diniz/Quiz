@@ -10,14 +10,23 @@ import React from "react";
 
 const perguntas = config.perguntas;
 
+const answerStates = {
+    DEFAULT: "DEFAULT",
+    ERROR: "ERROR",
+    SUCCESS: "SUCCESS"
+} as const;
+
+
 
 // usamos export default quando queremos criar uma nova página
 export default function GameScreen() {
 
-    const [answerState, setAnswerState] = React.useState("");
+    const [answerState, setAnswerState] = React.useState<keyof typeof answerStates>(answerStates.DEFAULT);
     const [perguntaAtual, mudarPerguntaAtual] = React.useState(0);
+    const [userAnswers, setUserAnswers] = React.useState([]);
     const perguntaNumero = perguntaAtual + 1;
     const pergunta = perguntas[perguntaAtual];
+    const eUltimaPergunta = perguntaNumero === perguntas.length;
 
     return(
         <main className={pageStyles.screen} style={{flex: 1, backgroundImage: `url("${pergunta.imagem}")` }}>
@@ -48,7 +57,39 @@ export default function GameScreen() {
                         const formData = new FormData($perguntaInfo);
                         const {alternativa} = Object.fromEntries(formData.entries());
                         const isCorrectAnswer = alternativa === pergunta.answer;
-                        mudarPerguntaAtual(perguntaAtual + 1);
+                        console.log("alternativa", alternativa);
+                        console.log("resposta", pergunta.answer);
+
+                        if (isCorrectAnswer){
+                            setUserAnswers([
+                                ...userAnswers,
+                                true
+                            ]);
+                            setAnswerState(answerStates.SUCCESS);
+                        }
+                        if (!isCorrectAnswer) {
+                            setUserAnswers([
+                                ...userAnswers,
+                                false
+                            ]);
+                            setAnswerState(answerStates.ERROR);
+                        }
+                        
+                        setTimeout(() => {
+                            if(eUltimaPergunta) {
+                                
+                                const totalPoints = [...userAnswers, isCorrectAnswer].reduce(
+                                    (_totalPoints, currentAnswer) => {
+                                        return currentAnswer ? _totalPoints + 1 : _totalPoints;
+                                }, 0);
+
+                                alert(`Você concluiu o desafio e acertou ${totalPoints}`);
+                                return;
+                            }
+                            mudarPerguntaAtual(perguntaAtual + 1);
+                            setAnswerState(answerStates.DEFAULT);
+                        }, 2 * 1000);
+                        // mudarPerguntaAtual(perguntaAtual + 1);
                     }}
                     >
                         {pergunta.alternativas.map((alternativa, index) => (
@@ -58,17 +99,21 @@ export default function GameScreen() {
                             order={index}
                             />
                         ))}
-                            {answerState === "" && (
+                            {answerState === answerStates.DEFAULT && (
                                 <button>
                                     Confirmar
                                 </button>
                             )}
-                            {answerState === "error" && (
-                                "X"
-                            )}
-                            {answerState === "success" && (
-                                "V"
-                            )}
+
+                            <p style={{textAlign: "center"}}>
+                                {answerState === answerStates.ERROR && (
+                                    "❌"
+                                )}
+                                {answerState === answerStates.SUCCESS && (
+                                    "✅"
+                                )} 
+                            </p>
+                            
                         
                     </form>
                 </Card> 
