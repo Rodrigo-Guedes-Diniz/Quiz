@@ -1,16 +1,23 @@
 // a extensão JSX significa que o conteúdo é o HTML do React
 
-import Link from 'next/link'
-import pageStyles from './page.module.css'
-import { title } from 'process'
-import {Card} from "./components/Card"
-import {Footer} from "./components/Footer"
+"use client";
+
+import Link from 'next/link';
+import pageStyles from './page.module.css';
+import { title } from 'process';
+import {Card} from "./components/Card";
+import {Footer} from "./components/Footer";
+import { useRouter } from 'next/navigation';
+import { use } from 'react';
+
 
 export default function Page() {
 
   // LOGO DO QUIZ
   // CARD PEDINDO O NOME
   // FOOTER
+
+    const router = useRouter();
 
     return (
       <main className={pageStyles.screen} style={{flex: 1}}>
@@ -28,17 +35,35 @@ export default function Page() {
         <Card
           headerTitle="TESTE SEU CONHECIMENTO DE F1"
         >
+
         <p>
           Lambe minha bilola
         </p>
-        <p>
-          FORMULARIO / BOTAO
-          <br />
-          <Link href="/game">
-          Jogar 
-        </Link>
-        </p>
-        
+        <div style={{
+            margin: "24px",
+          }}>
+          <form
+            onSubmit={() => {
+              event.preventDefault();
+              const name = "Rodrigo";
+              router.push(`/game?player=${name}`)
+            }}
+          >
+          <div style={{ marginBottom: "24px" }}>
+            <input 
+            type="text"
+            placeholder="Diz aí seu nome pra jogar :)"
+            name="playerName"
+            />
+          </div>
+          
+          <button>
+            Jogar
+          </button>
+          
+          
+        </form>
+        </div>
         </Card>
         <Footer></Footer>
 

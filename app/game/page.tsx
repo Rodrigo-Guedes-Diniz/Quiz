@@ -7,6 +7,7 @@ import pageStyles from "../page.module.css";
 import config from "../../config.json"
 import { Alternativa} from "../components/Alternativa"
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const perguntas = config.perguntas;
 
@@ -21,6 +22,7 @@ const answerStates = {
 // usamos export default quando queremos criar uma nova página
 export default function GameScreen() {
 
+    const router = useRouter();
     const [answerState, setAnswerState] = React.useState<keyof typeof answerStates>(answerStates.DEFAULT);
     const [perguntaAtual, mudarPerguntaAtual] = React.useState(0);
     const [userAnswers, setUserAnswers] = React.useState([]);
@@ -84,6 +86,7 @@ export default function GameScreen() {
                                 }, 0);
 
                                 alert(`Você concluiu o desafio e acertou ${totalPoints}`);
+                                router.push("/");
                                 return;
                             }
                             mudarPerguntaAtual(perguntaAtual + 1);
