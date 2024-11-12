@@ -1,3 +1,22 @@
 .component {
     display: block;
+    background-color: #971a0c33;
+    /**/
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: opacity .2s;
+    border-radius: 4px;
+}
+
+.component:hover,
+.component:focus {
+    opacity: .6;
+}
+
+.input {
+    display: none;
+}
+
+.input:checked ~ .component {
+    background-color: red;
 }

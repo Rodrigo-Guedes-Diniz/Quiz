@@ -30,6 +30,8 @@ export default function GameScreen() {
     const pergunta = perguntas[perguntaAtual];
     const eUltimaPergunta = perguntaNumero === perguntas.length;
 
+    console.log(userAnswers);
+
     return(
         <main className={pageStyles.screen} style={{flex: 1, backgroundImage: `url("${pergunta.imagem}")` }}>
             <section className={pageStyles.container}>
@@ -52,7 +54,7 @@ export default function GameScreen() {
                         {pergunta.descricao}
                     </p>
                     <form 
-                    style={{margin: "0px 32px", marginBottom: "20px"}}
+                    style={{margin: "0px 32px", marginBottom: "20px", marginTop: "24px"}}
                     onSubmit={() => {
                        event.preventDefault();
                         const $perguntaInfo = event.target as HTMLFormElement;
@@ -96,11 +98,19 @@ export default function GameScreen() {
                     }}
                     >
                         {pergunta.alternativas.map((alternativa, index) => (
-                            <Alternativa 
-                            key={alternativa + index}
-                            label={alternativa}
-                            order={index}
-                            />
+                            <div
+                                
+                                style={{
+                                    marginBottom: "8px"
+                                }}
+                            >
+                                <Alternativa 
+                                key={alternativa + index}
+                                label={alternativa}
+                                order={index}
+                                />
+                            </div>
+                            
                         ))}
                             {answerState === answerStates.DEFAULT && (
                                 <button>

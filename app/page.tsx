@@ -37,7 +37,7 @@ export default function Page() {
         >
 
         <p>
-          Lambe minha bilola
+          Quantas perguntas você consegue acertar?
         </p>
         <div style={{
             margin: "24px",
